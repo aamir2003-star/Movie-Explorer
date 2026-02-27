@@ -31,7 +31,7 @@ const MovieCard = ({ movie }) => {
         className={`mt-auto text-sm py-1 px-3 rounded border ${
           isInWatchlist
             ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-            : 'border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white'
+            : 'border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white cursor-pointer'
         }`}
       >
         {isInWatchlist ? 'Added' : '+ Watchlist'}
