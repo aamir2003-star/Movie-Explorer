@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCard from './MovieCard';
-import { fetchMovies } from '../features/movies/moviesSlice';
+import fetchMovies from '../features/thunk/movieThunk';
 import SkeletonCard from './common/SkeletonCard';
 
 

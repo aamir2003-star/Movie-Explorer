@@ -1,24 +1,25 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { searchMovies } from '../../api/omdbApi';
+import fetchMovies from '../thunk/movieThunk';
 
-export const fetchMovies = createAsyncThunk(
-  'movies/fetchMovies',
-  async ({ searchTerm, page, type }, { rejectWithValue }) => {
-    try {
-      const data = await searchMovies(searchTerm, page, type);
-      if (data.Response === 'False') {
-        return rejectWithValue(data.Error);
-      }
-      return {
-        movies: data.Search,
-        totalResults: parseInt(data.totalResults, 10),
-        page,
-      };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+// export const fetchMovies = createAsyncThunk(
+//   'movies/fetchMovies',
+//   async ({ searchTerm, page, type }, { rejectWithValue }) => {
+//     try {
+//       const data = await searchMovies(searchTerm, page, type);
+//       if (data.Response === 'False') {
+//         return rejectWithValue(data.Error);
+//       }
+//       return {
+//         movies: data.Search,
+//         totalResults: parseInt(data.totalResults, 10),
+//         page,
+//       };
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 const moviesSlice = createSlice({
   name: 'movies',

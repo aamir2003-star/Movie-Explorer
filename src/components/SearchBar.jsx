@@ -4,8 +4,8 @@ import {
   setSearchTerm,
   setSearchType,
   clearMovies,
-  fetchMovies,
 } from '../features/movies/moviesSlice';
+import fetchMovies  from '../features/thunk/movieThunk';
 
 const SearchBar = () => {
   const [input, setInput] = useState('');
@@ -14,6 +14,7 @@ const SearchBar = () => {
 
   const handleTypeChange = (type) => {
     dispatch(setSearchType(type));
+    dispatch(clearMovies())
   };
 
   const handleSearch = (e) => {
@@ -34,17 +35,19 @@ const SearchBar = () => {
           className={`px-5 py-2  text-sm font-bold cursor-pointer rounded-2xl border border-gray-500 ${
             searchType === 'movie'
               ? 'bg-violet-700 text-white'
-              : 'bg-[#222] text-gray-400'
+              : 'bg-[#222] text-gray-400 hover:text-white'
           }`}
         >
           Movies
         </button>
         <button
-          onClick={() => handleTypeChange('series')}
+          onClick={() => 
+            
+            handleTypeChange('series')}
           className={`px-5 py-2 rounded-2xl text-sm font-bold cursor-pointer border border-gray-500 ${
             searchType === 'series'
               ? 'bg-rose-700 text-white'
-              : 'bg-[#222] text-gray-400'
+              : 'bg-[#222] text-gray-400 hover:text-white'
           }`}
         >
           TV Shows

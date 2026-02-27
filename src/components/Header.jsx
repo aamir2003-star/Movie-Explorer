@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../features/auth/authSlice';
+import { clearMovies } from '../features/movies/moviesSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -44,8 +45,9 @@ const Header = () => {
             onClick={() => {
               dispatch(logout());
               navigate('/');
+              dispatch(clearMovies())
             }}
-            className="bg-red-600 text-white text-sm px-3 py-1.5 rounded-xl cursor-pointer border-0"
+            className="bg-red-600 text-white text-sm px-3 py-1.5 rounded-xl hover:bg-red-700 cursor-pointer border-0"
           >
             Logout
           </button>

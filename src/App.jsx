@@ -5,6 +5,7 @@ import Header from './components/Header';
 import LoginForm from './components/LoginForm';
 import Discover from './pages/Discover';
 import WatchlistPage from './pages/WatchlistPage';
+import AppContet from './routes/AppContet';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -16,11 +17,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Discover />} />
-        <Route path="/watchlist" element={<WatchlistPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+    <AppContet />
     </>
   );
 };

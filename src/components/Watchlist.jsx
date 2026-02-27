@@ -19,7 +19,7 @@ const Watchlist = () => {
           className={`flex-1 py-2.5 text-sm font-bold  border border-gray-500 cursor-pointer rounded-lg ${
             activeTab === 'movies'
               ? 'bg-violet-700 text-white'
-              : 'bg-[#1e1e2e] text-gray-500'
+              : 'bg-[#1e1e2e] text-gray-500 hover:text-white'
           }`}
         >
           Movies {watchlist.length > 0 && `(${watchlist.length})`}
@@ -29,7 +29,7 @@ const Watchlist = () => {
           className={`flex-1 py-2.5 text-sm font-bold  border border-gray-500 cursor-pointer rounded-lg ${
             activeTab === 'tv'
               ? 'bg-rose-700 text-white'
-              : 'bg-[#1e1e2e] text-gray-500'
+              : 'bg-[#1e1e2e] text-gray-500 hover:text-white'
           }`}
         >
           TV Shows {tvWatchList.length > 0 && `(${tvWatchList.length})`}
