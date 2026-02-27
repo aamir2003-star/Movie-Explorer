@@ -3,21 +3,65 @@ import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCard from './MovieCard';
 import { fetchMovies } from '../features/movies/moviesSlice';
+import SkeletonCard from './common/SkeletonCard';
+
+
 
 const MovieGrid = () => {
   const dispatch = useDispatch();
-  const { movies, loading, error, hasMore, searchTerm, currentPage } =
-    useSelector((state) => state.movies);
+  const {
+    movies,
+    loading,
+    error,
+    hasMore,
+    searchTerm,
+    currentPage,
+    searchType,
+  } = useSelector((state) => state.movies);
+
   const loadMore = () => {
-    dispatch(fetchMovies({ searchTerm, page: currentPage + 1 }));
+    dispatch(
+      fetchMovies({ searchTerm, page: currentPage + 1, type: searchType })
+    );
   };
 
   if (error) {
-    return <p className="text-red-500 text-center mt-4">{error}</p>;
+    return (
+      <div className="text-center py-16">
+        <p className="text-red-400 text-base">{error}</p>
+        <p className="text-gray-600 text-sm mt-1">
+          Try a different search term
+        </p>
+      </div>
+    );
+  }
+
+  if (loading && movies.length === 0) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-5 gap-4">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
+      </div>
+    );
   }
 
   if (!loading && movies.length === 0 && searchTerm) {
-    return <p className="text-center text-gray-500 mt-4">No results found.</p>;
+    return (
+      <div className="text-center py-16">
+        <p className="text-gray-400 text-base">No results found</p>
+      </div>
+    );
+  }
+
+  if (!searchTerm && movies.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <p className="text-gray-300 text-base font-bold">
+          Search for something
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -26,26 +70,25 @@ const MovieGrid = () => {
       next={loadMore}
       hasMore={hasMore}
       loader={
-        <div className="flex justify-center items-center py-4">
-          <div className="h-6 w-6 animate-spin rounded-full border-4 border-gray-300 border-t-gray-500"></div>
+        <div className="grid grid-cols-5 gap-4 pt-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
         </div>
       }
       endMessage={
         movies.length > 0 && (
-          <p className="text-center text-gray-400 py-4 text-sm">
-            You're all caught up.
+          <p className="text-center text-gray-600 py-5 text-sm">
+            You've seen everything
           </p>
         )
       }
     >
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {movies.map((movie) => (
           <MovieCard key={movie.imdbID} movie={movie} />
         ))}
       </div>
-      {loading && movies.length === 0 && (
-        <p className='text-center text-gray-400 py-4'>Loading....</p>
-      )}
     </InfiniteScroll>
   );
 };

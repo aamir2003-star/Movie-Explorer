@@ -3,9 +3,9 @@ import { searchMovies } from '../../api/omdbApi';
 
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
-  async ({ searchTerm, page }, { rejectWithValue }) => {
+  async ({ searchTerm, page, type }, { rejectWithValue }) => {
     try {
-      const data = await searchMovies(searchTerm, page);
+      const data = await searchMovies(searchTerm, page, type);
       if (data.Response === 'False') {
         return rejectWithValue(data.Error);
       }
@@ -24,6 +24,7 @@ const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
     searchTerm: '',
+    searchType: 'movie', 
     movies: [],
     totalResults: 0,
     currentPage: 1,
@@ -31,17 +32,21 @@ const moviesSlice = createSlice({
     loading: false,
     error: null,
     watchlist: [],
+    tvWatchList: [],
   },
   reducers: {
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
     },
+    setSearchType(state, action) {
+      state.searchType = action.payload;
+    },
     clearMovies(state) {
-      ((state.movies = []),
-        (state.currentPage = 1),
-        (state.totalResults = 0),
-        (state.hasMore = false),
-        (state.error = null));
+      state.movies = [];
+      state.currentPage = 1;
+      state.totalResults = 0;
+      state.hasMore = false;
+      state.error = null;
     },
 
     addToWatchlist(state, action) {
@@ -65,6 +70,26 @@ const moviesSlice = createSlice({
         movie.watched = !movie.watched;
       }
     },
+
+    addToTvWatchList(state, action) {
+      const existstvShow = state.tvWatchList.find(
+        (v) => v.imdbID === action.payload.imdbID
+      );
+      if (!existstvShow) {
+        state.tvWatchList.push({ ...action.payload, watched: false });
+      }
+    },
+    removeFromTvWatchList(state, action) {
+      state.tvWatchList = state.tvWatchList.filter(
+        (m) => m.imdbID !== action.payload
+      );
+    },
+    toggleTvWatched(state, action) {
+      const tvShow = state.tvWatchList.find((m) => m.imdbID === action.payload);
+      if (tvShow) {
+        tvShow.watched = !tvShow.watched;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,6 +107,7 @@ const moviesSlice = createSlice({
         state.totalResults = totalResults;
         state.currentPage = page;
         state.hasMore = state.movies.length < totalResults;
+        state.loading = false;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
@@ -92,9 +118,13 @@ const moviesSlice = createSlice({
 
 export const {
   setSearchTerm,
+  setSearchType,
   clearMovies,
   addToWatchlist,
   removeFromWatchlist,
   toggleWatched,
+  addToTvWatchList,
+  removeFromTvWatchList,
+  toggleTvWatched,
 } = moviesSlice.actions;
 export default moviesSlice.reducer;
