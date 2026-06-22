@@ -1,12 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { searchMovies } from '../../api/omdbApi';
 import fetchMovies from '../thunk/movieThunk';
-
 const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
     searchTerm: '',
-    searchType: 'movie', 
+    searchType: 'movie',
     movies: [],
     totalResults: 0,
     currentPage: 1,

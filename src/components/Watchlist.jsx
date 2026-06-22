@@ -12,7 +12,6 @@ const Watchlist = () => {
 
   return (
     <div>
-      {/* Tabs */}
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => setActiveTab('movies')}

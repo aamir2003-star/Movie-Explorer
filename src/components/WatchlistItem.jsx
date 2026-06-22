@@ -60,7 +60,7 @@ const WatchlistItem = ({ movie, isTV }) => {
 
       <button
         onClick={handleRemove}
-        className="shrink-0 border border-red-600 text-red-500 bg-transparent px-2.5 py-1 rounded text-xs cursor-pointer"
+        className={`shrink-0 border border-red-600 text-red-500 bg-transparent px-2.5 py-1 rounded text-xs cursor-pointer ${movie.watched ? 'hover:bg-red-600 hover:text-white' : 'hover:bg-red-600 hover:text-white'}`}
       >
         Remove
       </button>

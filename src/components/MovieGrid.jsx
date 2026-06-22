@@ -58,7 +58,7 @@ const MovieGrid = () => {
     return (
       <div className="text-center py-16">
         <p className="text-gray-300 text-base font-bold">
-          Search for something
+          Search for something....
         </p>
       </div>
     );

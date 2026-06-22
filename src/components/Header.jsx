@@ -29,9 +29,9 @@ const Header = () => {
           </Link>
           <Link
             to="/watchlist"
-            className={`px-4 py-1.5  text-sm border border-gray-500 rounded-2xl no-underline flex items-center gap-2 ${
+            className={`px-4 py-1.5  text-sm border border-gray-500  rounded-2xl no-underline flex items-center gap-2 ${
               location.pathname === '/watchlist'
-                ? 'bg-violet-700 text-white'
+                ? 'bg-violet-700  text-white'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -40,12 +40,15 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <span className="text-gray-400 text-sm capitalize">Hi, {username}</span>
+          <span className="text-gray-400 text-sm capitalize">
+            Hi, {username}
+          </span>
           <button
             onClick={() => {
               dispatch(logout());
               navigate('/');
-              dispatch(clearMovies())
+              window.location.reload();
+              dispatch(clearMovies());
             }}
             className="bg-red-600 text-white text-sm px-3 py-1.5 rounded-xl hover:bg-red-700 cursor-pointer border-0"
           >
